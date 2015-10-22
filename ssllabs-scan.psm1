@@ -17,8 +17,8 @@ function Get-SSLLabsAvailability
     param(
     )
 
-    Begin{    
-        Write-Verbose -Message "[$(Get-Date)] List of Parameters :: $($PSBoundParameters.GetEnumerator() | Out-String)"  
+    Begin{
+        Write-Verbose -Message "[$(Get-Date)] List of Parameters :: $($PSBoundParameters.GetEnumerator() | Out-String)"
         Write-Verbose -Message "[$(Get-Date)] Begin :: $($MyInvocation.MyCommand)"
         $ApiEnpoint = 'https://api.ssllabs.com/api/v2/'
         $Uri = $ApiEnpoint + 'info'
@@ -29,7 +29,7 @@ function Get-SSLLabsAvailability
             $Result = Invoke-RestMethod -Method Get -Uri $Uri
             $Result
         }
-        catch [Exception] 
+        catch [Exception]
         {
             Write-Output -InputObject "[$(Get-Date)] Info  :: $($MyInvocation.MyCommand)"
             Write-Output -InputObject "[$(Get-Date)] Error :: $_ "
@@ -44,7 +44,7 @@ function Get-SSLLabsAvailability
         .SYNOPSIS
         Perform a new SSL Assessment using Qualys SSL Labs API.
         .DESCRIPTION
-        Execute a SSL Test using the free online service created by Qualys Labs. It performs a deep analysis of the configuration of any SSL web server on the public Internet. 
+        Execute a SSL Test using the free online service created by Qualys Labs. It performs a deep analysis of the configuration of any SSL web server on the public Internet.
         .EXAMPLE
         Invoke-Assessment -Domain 'letsencrypt.org' -All done -Publish off -OutJson
         It will start the assessment of the domain 'letsencrypt.org' with a full report option and generates an output in JSON format using the -OutJson Parameter while not publishing the report on the public report page.
@@ -77,7 +77,7 @@ function Invoke-Assessment
         #[parameter(Mandatory = $false, Position = 4, ParameterSetName = 'All')]
         [parameter(Mandatory = $false, Position = 4,ParameterSetName = 'Cache')]
         [ValidateSet('on','off')]
-        [string]$StartNew = 'on',  
+        [string]$StartNew = 'on',
         #[parameter(Mandatory = $false, Position = 5, ParameterSetName = 'All')]
         [parameter(Mandatory = $false,Position = 5, ParameterSetName = 'Cache')]
         [Int]$MaxAge = 1,
@@ -89,12 +89,12 @@ function Invoke-Assessment
         [switch]$OutJson
     )
 
-    Begin{    
-        Write-Verbose -Message "[$(Get-Date)] List of Parameters :: $($PSBoundParameters.GetEnumerator() | Out-String)"  
+    Begin{
+        Write-Verbose -Message "[$(Get-Date)] List of Parameters :: $($PSBoundParameters.GetEnumerator() | Out-String)"
         Write-Verbose -Message "[$(Get-Date)] Begin :: $($MyInvocation.MyCommand)"
         $ApiEnpoint = 'https://api.ssllabs.com/api/v2'
-        
-        $UriBase = $ApiEnpoint + "/analyze?host=$Domain"              
+
+        $UriBase = $ApiEnpoint + "/analyze?host=$Domain"
 
         if (($PSBoundParameters.ContainsKey('All')) -and (($All -eq 'on')) -or ($All -eq 'done'))
         {
@@ -112,7 +112,7 @@ function Invoke-Assessment
                 $Uri = $UriBase + "&MaxAge=$MaxAge"
             }
         }
-        elseif(($PSBoundParameters.ContainsKey('StartNew')) -and ($StartNew -eq 'on')) 
+        elseif(($PSBoundParameters.ContainsKey('StartNew')) -and ($StartNew -eq 'on'))
         {
             $Uri = $UriBase +  "&startNew=$StartNew"
         }
@@ -136,7 +136,7 @@ function Invoke-Assessment
                 $Result
             }
         }
-        catch [Exception] 
+        catch [Exception]
         {
             Write-Output -InputObject "[$(Get-Date)] Info  :: $($MyInvocation.MyCommand)"
             Write-Output -InputObject "[$(Get-Date)] Error :: $_ "
@@ -160,15 +160,15 @@ function Get-EndpointInformation
         [string]$FromCache = 'off'
     )
 
-    Begin{    
-        Write-Verbose -Message "[$(Get-Date)] List of Parameters :: $($PSBoundParameters.GetEnumerator() | Out-String)"  
+    Begin{
+        Write-Verbose -Message "[$(Get-Date)] List of Parameters :: $($PSBoundParameters.GetEnumerator() | Out-String)"
         Write-Verbose -Message "[$(Get-Date)] Begin :: $($MyInvocation.MyCommand)"
         $ApiEnpoint = 'https://api.ssllabs.com/api/v2'
-        
+
         $Cache = "&fromCache=$FromCache"
-        
+
         $Uri = $ApiEnpoint + "/getEndpointData?host=$Domain&s=$IPAddress$Cache"
-        
+
     }
     Process{
         try
@@ -177,7 +177,7 @@ function Get-EndpointInformation
             #$Result
             Write-Output -InputObject 'I have a bug, yeah! a bug, but not for a long time'
         }
-        catch [Exception] 
+        catch [Exception]
         {
             Write-Output -InputObject "[$(Get-Date)] Info  :: $($MyInvocation.MyCommand)"
             Write-Output -InputObject "[$(Get-Date)] Error :: $_ "
@@ -187,5 +187,3 @@ function Get-EndpointInformation
         Write-Verbose -Message "[$(Get-Date)] End   :: Finished"
     }
 }
-
-
