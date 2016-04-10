@@ -7,7 +7,7 @@
         IT should return an object with details about the number of assesment allowed and the term of service.
         .EXAMPLE
         Get-SSLLabsAvailability
-        After runing the Cmdlet, it shouldreturn a object with the enpoint informations.
+        After runing the Cmdlet, it should return a object with the enpoint informations.
     #>
 function Get-SSLLabsAvailability
 {
