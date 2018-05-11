@@ -2,7 +2,6 @@
 
 SSLLabs-ScanHDx is a Powershell module that uses the SSL Labs API to report the state of the SSL associated with the tested domain.
 
-
 ## Installation
 
 First, check your Powershell version
@@ -28,13 +27,11 @@ Last, import the SSLLabs-ScanHDx module by running:
 Import-Module  SSLLabs-ScanHDx
 ```
 
-
 ### Powershell version 5
 
 ```powershell
 Install-Module SSLLabs-ScanHDx -Scope CurrentUser
 ```
-
 
 ## Update
 
